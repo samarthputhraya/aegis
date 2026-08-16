@@ -15,6 +15,7 @@ import logging
 import os
 
 from aegis import orchestrator, slack_io, surfaces
+from aegis.risk import _mask          # one source of truth for account masking
 from mcp_server import tools as mcp_tools
 
 log = logging.getLogger(__name__)
@@ -137,11 +138,43 @@ def parse_action_value(raw: str) -> dict:
         return {}
 
 
+def actor_is_external(actor_team: str, our_team_id: str) -> bool:
+    """Is the person who clicked demonstrably on the other side of the Connect channel?
+
+    The warning card is posted into the shared channel, so the vendor — including a
+    sender Aegis has just flagged — can see it and press its buttons. Neither button
+    should obey them: `mark_safe` would let a fraudster clear themselves, and `verify`
+    replies with the account on file.
+
+    Only a *positive* mismatch refuses. If Slack sends no team on the payload we allow
+    it and log, because silently disabling both buttons on an unexpected payload shape
+    would be its own failure — the operator would think they had a control they didn't.
+    """
+    return bool(our_team_id and actor_team and actor_team != our_team_id)
+
+
+def _refuse(client, channel: str, thread_ts: str, what: str) -> dict:
+    text = (f":no_entry: That button can only be used by someone from this workspace. "
+            f"The {what} request was ignored and nothing was changed.")
+    try:
+        client.chat_postMessage(channel=channel, thread_ts=thread_ts or None, text=text)
+    except Exception as exc:                                  # noqa: BLE001
+        log.error("failed to post refusal in %s: %s", channel, exc)
+    return {"refused": True, "text": text}
+
+
 def handle_verify(client, action_value: str, channel: str, thread_ts: str = "",
-                  actor: str = "") -> dict:
-    """Run the out-of-band check: MCP bank verification + a verification task."""
+                  actor: str = "", actor_team: str = "", our_team_id: str = "") -> dict:
+    """Run the out-of-band check: bank verification + a verification task."""
+    our_team_id = our_team_id or _env("OUR_TEAM_ID")
+    if actor_is_external(actor_team, our_team_id):
+        log.warning("verify pressed by external actor %s (team %s); refusing",
+                    actor or "?", actor_team)
+        return _refuse(client, channel, thread_ts, "verification")
+
     payload = parse_action_value(action_value)
     vendor_key = payload.get("vendor_key") or _env("VENDOR_KEY", "acme_supplies")
+    vendor_key = vendor_key if isinstance(vendor_key, str) else _env("VENDOR_KEY", "acme_supplies")
     iban = payload.get("iban") or ""
 
     iban = iban if isinstance(iban, str) else ""
@@ -163,8 +196,13 @@ def handle_verify(client, action_value: str, channel: str, thread_ts: str = "",
     elif check["match"] is False:
         headline = (f":rotating_light: The requested IBAN does *not* match the account on "
                     f"file for {vendor_name}.")
-        detail = (f"On file: `{check['on_file_iban']}` (since {check.get('on_file_since') or 'unknown'})\n"
-                  f"Requested: `{check['requested_iban']}`\n"
+        # Masked, for the same reason the card masks it: this thread is in a Connect
+        # channel that the counterparty reads. Posting the real account number here
+        # would hand it to whoever sent the message we just flagged. The unmasked
+        # value goes to the verification task, which is internal.
+        detail = (f"On file: `{_mask(check['on_file_iban'])}` "
+                  f"(since {check.get('on_file_since') or 'unknown'})\n"
+                  f"Requested: `{_mask(check['requested_iban'])}`\n"
                   "Do not pay. Confirm by calling a number you already had for this vendor — "
                   "not one from this thread.")
         task = mcp_tools.open_verification_task(
@@ -183,7 +221,8 @@ def handle_verify(client, action_value: str, channel: str, thread_ts: str = "",
         task = None
     else:
         headline = ":mag: No IBAN was present in that message, so there was nothing to compare."
-        detail = f"The account on file for {vendor_name} is `{check['on_file_iban']}`."
+        detail = (f"The account on file for {vendor_name} ends `{_mask(check['on_file_iban'])}`. "
+                  "Check the full number in your own finance system, not from this thread.")
         task = None
 
     if task:
@@ -200,14 +239,22 @@ def handle_verify(client, action_value: str, channel: str, thread_ts: str = "",
 
 
 def handle_mark_safe(client, action_value: str, channel: str, thread_ts: str = "",
-                     actor: str = "") -> dict:
+                     actor: str = "", actor_team: str = "", our_team_id: str = "") -> dict:
     """Record a human decision that this sender is legitimate in this channel."""
+    our_team_id = our_team_id or _env("OUR_TEAM_ID")
+    if actor_is_external(actor_team, our_team_id):
+        log.warning("mark_safe pressed by external actor %s (team %s); refusing",
+                    actor or "?", actor_team)
+        return _refuse(client, channel, thread_ts, "mark-safe")
+
     payload = parse_action_value(action_value)
+    # Validate BEFORE mutating: button values are attacker-echoable, and a list or dict
+    # here used to reach `set.add` and raise, or store a non-string in _TRUSTED.
     user = payload.get("user", "")
+    user = user if isinstance(user, str) else ""
     if user:
         _TRUSTED.setdefault(channel, set()).add(user)
 
-    user = user if isinstance(user, str) else ""      # button values are attacker-echoable
     who = f"<@{user}>" if user.startswith(("U", "W")) else (user or "that sender")
     text = (f":white_check_mark: {who} marked as trusted in this channel"
             + (f" by <@{actor}>" if actor else "") + ".\n"

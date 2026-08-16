@@ -20,6 +20,15 @@ import sys
 
 from aegis import handlers
 
+# Load .env if python-dotenv is installed, so `python app.py` works after
+# `cp .env.example .env` without also having to export everything by hand.
+# scripts/start_socket_mode.sh sources .env itself; this covers the HTTP path.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:                                            # pragma: no cover
+    pass
+
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),
     format="%(asctime)s %(levelname)-7s %(name)s: %(message)s",
@@ -74,12 +83,17 @@ def _dispatch(fn, client, body: dict) -> None:
         log.warning("%s: block_actions payload had no channel; ignoring", fn.__name__)
         return
     actions = body.get("actions") or [{}]
+    user = body.get("user") or {}
     try:
         fn(client,
            action_value=actions[0].get("value", ""),
            channel=channel,
            thread_ts=_thread_ts(body),
-           actor=(body.get("user") or {}).get("id", ""))
+           actor=user.get("id", ""),
+           # Which side of the Connect channel pressed the button. The card is visible
+           # to the vendor, so both handlers refuse a demonstrably external actor.
+           actor_team=user.get("team_id") or (body.get("team") or {}).get("id", ""),
+           our_team_id=os.getenv("OUR_TEAM_ID", ""))
     except Exception:                                          # noqa: BLE001
         log.exception("%s failed", fn.__name__)
 

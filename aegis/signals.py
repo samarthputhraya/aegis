@@ -32,8 +32,20 @@ _PAY = ["bank account", "bank details", "banking details", "account number", "ib
         "beneficiary", "payee"]
 
 # Stems indicating something is being changed. Prefix-matched.
-_CHG = ["chang", "updat", "new", "different", "switch", "moved", "note our",
-        "are now", "is now", "revised", "amend", "no longer use", "instead of our"]
+#
+# A bare "new" is deliberately NOT in this list. It is prefix-matched, so it fires on
+# "news", "newsletter", "newly" and "Newcastle"; and because a change stem only has to
+# appear somewhere in the same message as a payment term — there is no proximity
+# requirement — "New invoice attached, please remit by end of day" scored `high` and
+# posted a fraud card. That is one of the most ordinary sentences in vendor
+# correspondence. The eval corpus missed it because no benign row happened to pair
+# "new" with a payment term, which is exactly the blind spot a same-author corpus has.
+# Pinned by test_a_new_invoice_is_not_a_payment_change.
+_CHG = ["chang", "updat", "different", "switch", "moved", "note our",
+        "are now", "is now", "revised", "amend", "no longer use", "instead of our",
+        # "new" only where it is already bound to something money-moving
+        "new bank", "new account", "new iban", "new beneficiary", "new payee",
+        "new remittance", "new payment", "new routing", "new sort code", "new swift"]
 
 _CRED = ["password", "mfa", "2fa", "otp", "one-time", "one time password", "credential",
          "credentials", "login", "log-in", "access token", "api key", "ssn",

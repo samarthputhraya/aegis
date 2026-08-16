@@ -127,7 +127,7 @@ isn't that it fires, it's that it doesn't fire on ordinary traffic.
 Aegis posts a red **CRITICAL** card in thread, listing why:
 
 - payment/bank-detail change requested
-- requested IBAN ≠ the IBAN on file (checked over MCP)
+- requested IBAN ≠ the IBAN on file (checked via `mcp_server.tools.verify_vendor_bank`)
 - urgency pressure
 - secrecy cue
 - sender not seen before in this channel

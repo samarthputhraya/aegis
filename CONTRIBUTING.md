@@ -12,7 +12,7 @@ cd aegis
 python -m venv .venv
 source .venv/bin/activate          # Windows (Git Bash): source .venv/Scripts/activate
 pip install -r requirements.txt
-python tests/run_all.py            # should print 32 PASS lines
+python tests/run_all.py            # should print 58 PASS lines
 ```
 
 No credentials are needed for the tests or the offline demo.
@@ -43,9 +43,10 @@ No credentials are needed for the tests or the offline demo.
    and 0% false negatives — which mostly proves the detectors match their own author's
    intuitions. Benign messages that trip it, or attacks that slip past, are the single
    most valuable contribution. Redacted real vendor-channel traffic especially.
-2. **Running it against a live workspace** and reporting what breaks. Every Slack call is
-   tested against a fake client; none has touched a real workspace. `docs/E2E.md` is the
-   walkthrough.
+2. **Running it against a live workspace** and reporting what breaks. The demo path was
+   run live once (August 2026, Socket Mode); everything else — the RTS history source,
+   HTTP mode, *Mark safe*, a second vendor, sustained operation, rate limiting — has only
+   ever run against the fake client. `docs/E2E.md` is the walkthrough.
 3. **The RTS response envelope.** `assistant.search.context`'s response shape isn't in the
    public docs, so `aegis/slack_io._messages_from_rts_response` accepts plausible shapes
    and raises otherwise. If you've seen a real one, replace the guesswork.

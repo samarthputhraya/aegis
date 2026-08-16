@@ -12,10 +12,11 @@ watches for the highest-stakes attack on that surface: **business email compromi
 
 It builds a relationship baseline from the channel, reads each external message for
 social-engineering signals, checks any requested bank details against what's on file
-via an MCP server, and flags the message **with its reasons** before finance can act.
+via the verification tools in `mcp_server/` (also exposed as an MCP server, though the
+agent calls them in-process), and flags the message **with its reasons** before finance can act.
 
 Measured on the labeled set in `tests/fixtures/messages.jsonl`: **0 false positives
-across 30 benign messages and 0 misses across 14 attacks**, both on an established
+across 35 benign messages and 0 misses across 14 attacks**, both on an established
 channel and on a brand-new one where every sender is unknown. That corpus is small and
 written by the same person who wrote the detectors — see
 [Known limitations](#known-limitations) before reading too much into it.
@@ -35,7 +36,7 @@ source .venv/bin/activate          # Windows (Git Bash): source .venv/Scripts/ac
 pip install -r requirements.txt
 
 python scripts/simulate_attack.py  # replay a BEC attempt and show the flag
-python tests/run_all.py            # 51 tests
+python tests/run_all.py            # 58 tests
 ```
 
 Expected output from `simulate_attack.py`:
@@ -92,7 +93,7 @@ external message in a Connect channel
  baseline.build()  ──────────────►  who normally talks here? what IBAN is on file?
       │
       ▼
- risk.assess()     ──────────────►  MCP: verify_vendor_bank(requested_iban)
+ risk.assess()     ──────────────►  verify_vendor_bank(requested_iban)  (mcp_server.tools)
       │                              score → low / medium / high / critical
       ▼
  surfaces.post_warning()    ─────►  Block Kit card in thread, with reasons + buttons
@@ -168,9 +169,10 @@ than useless.
   and `GITHUB_REPO` are set.
 - **Live message handling** (`aegis/handlers.py`, `app.py`) — external messages are
   scanned, the message under evaluation is excluded from its own baseline, and warnings
-  post in thread at `high`/`critical`. Both Socket Mode and HTTP entrypoints work.
-- **Buttons** — *Verify out-of-band* re-runs the MCP bank check, replies in thread with
-  both account numbers, and opens a verification task. *Mark safe* records the sender as
+  post in thread at `high`/`critical`. Socket Mode is the entrypoint that has been run;
+  the HTTP one is implemented but has never been exercised, live or in tests.
+- **Buttons** — *Verify out-of-band* re-runs the bank check, replies in thread with both
+  account numbers masked (the thread is visible to the counterparty), and opens a verification task. *Mark safe* records the sender as
   trusted in that channel, without clearing IBAN-mismatch checks.
 - **Canvas trust log** — created via `conversations.canvases.create`, updated via
   `canvases.edit`. Failures are logged and never suppress the warning.
@@ -184,7 +186,8 @@ than useless.
   paths, deliberately mimicking `SlackResponse` rather than returning plain dicts.
   `tests/test_eval.py` measures false-positive and false-negative rates against the
   labeled corpus and fails CI if they regress. `tests/test_regressions.py` pins the
-  fail-open bugs listed below so they cannot come back.
+  fail-open bugs listed below so they cannot come back (one of the eight, the empty-model
+  response, is pinned in `tests/test_reasoner.py`).
 
 ### Fail-open bugs found and fixed
 
@@ -237,7 +240,7 @@ Read these before trusting it with anything.
   pointed at a system of record.
 - **State is in-memory.** The trust log and "mark safe" decisions live in a dict and reset
   when the process restarts.
-- **The eval corpus is small and self-authored.** 30 benign and 14 malicious messages,
+- **The eval corpus is small and self-authored.** 35 benign and 14 malicious messages,
   written by the same person as the detectors. 0% / 0% on it means the obvious cases work;
   it does not mean the false-positive rate on your real vendor channel is zero. Growing
   this corpus with real (redacted) traffic is roadmap item 1.

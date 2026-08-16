@@ -42,3 +42,8 @@
 {"id": "b30", "label": "benign", "user": "U_PRIYA", "text": "The switch to the new courier is done, delivery windows are unchanged."}
 {"id": "m13", "label": "malicious", "user": "U_NEW", "text": "Hi - I handle receivables now. Do not use DE89370400440532013000 any longer; remit invoice 2211 to GB29 NWBK 60161331926819 instead. Urgent, and please keep it between us."}
 {"id": "m14", "label": "malicious", "user": "U_RAVI", "text": "our banking details have moved, please wire the balance to gb29 nwbk 60161331926819 before end of day. discreet handling appreciated."}
+{"id": "b31", "label": "benign", "user": "U_RAVI", "text": "New invoice attached, please remit by end of day."}
+{"id": "b32", "label": "benign", "user": "U_PRIYA", "text": "Our newsletter goes out today; the wire for INV-204 cleared this morning."}
+{"id": "b33", "label": "benign", "user": "U_RAVI", "text": "Newcastle depot confirmed the ACH batch arrived, nothing outstanding."}
+{"id": "b34", "label": "benign", "user": "U_PRIYA", "text": "Newly agreed rates apply from the next remittance, sheet attached."}
+{"id": "b35", "label": "benign", "user": "U_RAVI", "text": "The new courier needs the account number on the label, not the invoice."}

@@ -13,7 +13,7 @@ exactly what is and isn't wired up. The load-bearing caveats:
   the automated suite says nothing about live behaviour either way.
 - Vendor and bank-on-file data is mock data in `mcp_server/data/vendors.json`. There is no
   integration with any real system of record.
-- The false-positive rate is measured (0% across 30 benign messages in
+- The false-positive rate is measured (0% across 35 benign messages in
   `tests/fixtures/messages.jsonl`) but that corpus is small and was written by the same
   person as the detectors. It is a regression guard, not evidence about your traffic.
 - The trust log and "mark safe" decisions are held in memory and reset on restart.
@@ -28,7 +28,7 @@ rather than opening a public issue.
 
 Please include reproduction steps and, if relevant, the message text that triggers the
 behaviour. Note that reports of the detector *missing* an attack or *over-flagging* a
-benign message are welcome as ordinary issues — see `docs/ROADMAP.md` item 3 — and don't
+benign message are welcome as ordinary issues — see `docs/ROADMAP.md` item 1 — and don't
 need to go through the private channel.
 
 ## Handling secrets

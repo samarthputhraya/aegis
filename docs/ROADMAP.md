@@ -11,7 +11,7 @@ README's [Implementation status](../README.md#implementation-status).
 
 ## 1. Grow the eval corpus, and make it adversarial
 
-`tests/fixtures/messages.jsonl` currently holds 30 benign and 14 malicious messages,
+`tests/fixtures/messages.jsonl` currently holds 35 benign and 14 malicious messages,
 written by the same person who wrote the detectors. It measures 0% false positives and
 0% false negatives, which mostly proves the detectors match their own author's intuitions.
 

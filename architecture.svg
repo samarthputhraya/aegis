@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" font-family="Segoe UI, Arial, sans-serif">
   <rect width="1040" height="600" fill="#ffffff"/>
   <text x="520" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1d1c1d">Aegis — fraud tripwire for Slack Connect</text>
-  <text x="520" y="60" text-anchor="middle" font-size="13.5" fill="#616061">Relationship baseline (RTS) · signal classification (Slack AI) · on-file bank check (MCP) · real-time warning</text>
+  <text x="520" y="60" text-anchor="middle" font-size="13.5" fill="#616061">Relationship baseline (channel history) · LLM signal classification · on-file bank check · real-time warning</text>
 
   <rect x="40" y="100" width="250" height="150" rx="12" fill="#fbeceb" stroke="#e0a39e"/>
   <text x="165" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#a3261d">Slack Connect channel</text>
@@ -14,9 +14,9 @@
   <rect x="395" y="92" width="250" height="180" rx="12" fill="#1d1c1d"/>
   <text x="520" y="120" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Aegis (Bolt)</text>
   <rect x="415" y="132" width="210" height="30" rx="7" fill="#ffffff"/>
-  <text x="520" y="152" text-anchor="middle" font-size="12" fill="#1d1c1d">RTS — relationship baseline</text>
+  <text x="520" y="152" text-anchor="middle" font-size="12" fill="#1d1c1d">History — relationship baseline</text>
   <rect x="415" y="168" width="210" height="30" rx="7" fill="#ffffff"/>
-  <text x="520" y="188" text-anchor="middle" font-size="12" fill="#1d1c1d">Slack AI — signal classify</text>
+  <text x="520" y="188" text-anchor="middle" font-size="12" fill="#1d1c1d">LLM — signal classify</text>
   <rect x="415" y="204" width="210" height="30" rx="7" fill="#ffffff"/>
   <text x="520" y="224" text-anchor="middle" font-size="12" fill="#1d1c1d">Risk score + reasons</text>
   <rect x="415" y="240" width="210" height="24" rx="6" fill="#3aa657"/>
@@ -50,5 +50,5 @@
   <text x="701" y="171" text-anchor="middle" font-size="10.5" fill="#616061">bank check</text>
   <line x1="520" y1="272" x2="520" y2="357" stroke="#616061" stroke-width="2" marker-end="url(#a)"/>
   <text x="566" y="318" text-anchor="middle" font-size="10.5" fill="#616061">flag + log</text>
-  <text x="520" y="565" text-anchor="middle" font-size="12" fill="#616061">RTS scoped to the Connect channel → baseline without reading either org's internal Slack</text>
+  <text x="520" y="565" text-anchor="middle" font-size="12" fill="#616061">Baseline scoped to the Connect channel → no reading of either org's internal Slack</text>
 </svg>

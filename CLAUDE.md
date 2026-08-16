@@ -12,14 +12,17 @@
 **Aegis** — a social-engineering / vendor-fraud **tripwire for Slack Connect**.
 It sits in the shared channel between our org and an external party, builds a
 relationship **baseline** from the channel (Slack **Real-Time Search**), reads each
-external message for social-engineering signals (**Slack AI**), checks any requested
+external message for social-engineering signals (**an LLM classifier**, Anthropic
+Messages API — not Slack AI), checks any requested
 bank details against what's **on file** (**MCP**), and posts a real-time **warning**
 with reasons + a one-tap out-of-band verification.
 
 - **Origin:** built for the Slack Agent Builder Challenge (Devpost), New Slack Agent
   track. That submission window closed on 2026-07-13; the rubric notes below are kept as
   design rationale, not as a live deadline.
-- **Must use ≥1 of:** Slack AI, MCP, Real-Time Search. We use **all three**.
+- **Must use ≥1 of:** Slack AI, MCP, Real-Time Search. What is actually built: an MCP
+  server (called in-process, not over the protocol) and an RTS history source (written,
+  never run live). Classification is the Anthropic Messages API, not Slack AI.
 - **Positioning:** trust & safety lane (uncrowded at hackathons). Honest prior art:
   Abnormal AI / DoControl do *platform-level* Slack security; our edge is the
   *focused, in-channel, RTS-baseline agent*. Don't claim we invented Slack security.
@@ -44,13 +47,13 @@ mcp_server/tools.py    Tool bodies over mock data (verify_vendor_bank is the cru
 scripts/               simulate_attack.py (creds-free demo), start_socket_mode.sh
 tests/                 run_all.py + test_detection / test_reasoner / test_live_paths /
                        test_regressions / test_eval. fake_slack.py drives the live paths
-                       and mimics SlackResponse, not a plain dict. 51 tests.
+                       and mimics SlackResponse, not a plain dict. 58 tests.
 ```
 
 ## What's REAL vs TODO
 - ✅ Signal detection, LLM classification with fallback, history retrieval (both sources),
   confidence-weighted risk scoring, MCP bank check, live message handling, both buttons,
-  Canvas trust log, Socket Mode + HTTP entrypoints, 51 offline tests, a labeled eval set.
+  Canvas trust log, Socket Mode + HTTP entrypoints, 58 offline tests, a labeled eval set.
 - ✅ **Demo path verified live** (Aug 2026, two workspaces, Socket Mode): warning card,
   Verify button + MCP check, canvas trust log, and silence on ordinary traffic.
 - 🔧 Not covered by that run: the RTS history source, HTTP mode, the Mark safe button,
@@ -64,7 +67,7 @@ tests/                 run_all.py + test_detection / test_reasoner / test_live_p
 ## #1 PRIORITY — false positives
 This is a security agent; **crying wolf kills it**. `tests/test_eval.py` measures the
 rate against `tests/fixtures/messages.jsonl` and fails CI on regression. Currently 0% FP
-and 0% FN across 30 benign and 14 malicious cases, measured both warm (sender known) and
+and 0% FN across 35 benign and 14 malicious cases, measured both warm (sender known) and
 cold (new channel) — but that corpus was written by the same person as the detectors, so
 treat it as a regression guard, not evidence. Growing it with real redacted traffic is
 roadmap item 1. Add a test for every new signal, and ALWAYS show
@@ -75,7 +78,7 @@ the reasons on the card.
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python scripts/simulate_attack.py     # replays the BEC attempt, shows the flag
-python tests/run_all.py               # 51 tests — must stay green
+python tests/run_all.py               # 58 tests — must stay green
 python -m mcp_server.server           # MCP server
 bash scripts/start_socket_mode.sh     # live, Socket Mode (needs .env)
 ```
@@ -89,7 +92,7 @@ slash commands don't cross the org boundary.
 
 ## Judging rubric (optimize for this; tie-break order matters)
 1. **Technological Implementation** (also the tie-breaker + a bonus prize) — real RTS
-   baseline + Slack AI + MCP; clean code; tests.
+   baseline + LLM classification + MCP tools; clean code; tests.
 2. **Design** — clear warning UX + Canvas trust log.
 3. **Potential Impact** — BEC ≈ $4.67M/incident; every org with vendors in Slack.
 4. **Quality of Idea** — trust & safety agent; not another productivity bot.
