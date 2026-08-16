@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run the full test suite
+        run: python tests/run_all.py
+
+      - name: Run the offline attack simulation
+        run: python scripts/simulate_attack.py
+
+      - name: Import-check every module
+        run: |
+          python -c "import app, mcp_server.server"
+          python -c "from aegis import handlers, orchestrator, reasoner, risk, signals, slack_io, surfaces"
+
+      - name: Check the Socket Mode script is valid shell
+        run: bash -n scripts/start_socket_mode.sh
+
+      - name: Fail if a real-looking secret was committed
+        run: |
+          if grep -rEn "xoxb-[A-Za-z0-9]{10,}|xapp-1-[A-Za-z0-9]{10,}|sk-ant-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{30,}" \
+               --exclude-dir=.git .; then
+            echo "::error::a credential-shaped string is present in the tree"
+            exit 1
+          fi

@@ -1,0 +1,44 @@
+{"id": "b01", "label": "benign", "user": "U_RAVI", "text": "Morning! Order #4471 shipped this morning, tracking should hit your inbox shortly."}
+{"id": "b02", "label": "benign", "user": "U_RAVI", "text": "Invoice 2211 is attached. Same terms as always, net 30."}
+{"id": "b03", "label": "benign", "user": "U_PRIYA", "text": "Can you confirm the delivery address for the Leeds warehouse? We have two on file."}
+{"id": "b04", "label": "benign", "user": "U_RAVI", "text": "Heads up, our warehouse is closed Monday for the bank holiday so dispatch moves to Tuesday."}
+{"id": "b05", "label": "benign", "user": "U_PRIYA", "text": "Payment for invoice 2198 landed, thanks. Marking it settled on our side."}
+{"id": "b06", "label": "benign", "user": "U_RAVI", "text": "Quick one - are you still after the 500 unit run for Q4, or has that changed?"}
+{"id": "b07", "label": "benign", "user": "U_PRIYA", "text": "The revised quote is in the shared drive. Prices held from last quarter."}
+{"id": "b08", "label": "benign", "user": "U_RAVI", "text": "We had a hiccup with the courier, two pallets are delayed until Thursday. Sorry about that."}
+{"id": "b09", "label": "benign", "user": "U_PRIYA", "text": "Could you send the updated packing list before the shipment goes out today?"}
+{"id": "b10", "label": "benign", "user": "U_RAVI", "text": "Reminder that invoice 2205 is due at the end of this week."}
+{"id": "b11", "label": "benign", "user": "U_PRIYA", "text": "Our finance team asked whether you can move to e-invoicing next year. No rush."}
+{"id": "b12", "label": "benign", "user": "U_RAVI", "text": "New product sheet for the Q3 range, let me know if you want samples."}
+{"id": "b13", "label": "benign", "user": "U_PRIYA", "text": "Who is the right contact for a warranty claim on the batch from March?"}
+{"id": "b14", "label": "benign", "user": "U_RAVI", "text": "We are switching to recycled packaging from next month, no change to pricing."}
+{"id": "b15", "label": "benign", "user": "U_PRIYA", "text": "Can we push the review call to Thursday? Half the team is out."}
+{"id": "b16", "label": "benign", "user": "U_RAVI", "text": "The PO number on your last order didn't match ours, mind double checking it?"}
+{"id": "b17", "label": "benign", "user": "U_PRIYA", "text": "Confirming we received the credit note for the damaged units."}
+{"id": "b18", "label": "benign", "user": "U_RAVI", "text": "Our office is moving to a new address in Reading in September, I'll send details closer to the time."}
+{"id": "b19", "label": "benign", "user": "U_PRIYA", "text": "Thanks for turning that around so fast, genuinely appreciated."}
+{"id": "b20", "label": "benign", "user": "U_RAVI", "text": "Small correction on invoice 2213, the line for freight was doubled. Revised copy coming."}
+{"id": "b21", "label": "benign", "user": "U_PRIYA", "text": "Do you need a new signed NDA for the extended scope, or does the existing one cover it?"}
+{"id": "b22", "label": "benign", "user": "U_RAVI", "text": "Stock is tight on the 12mm fittings this month, worth ordering early if you need them."}
+{"id": "m01", "label": "malicious", "user": "U_RAVI", "text": "Hi, please note our bank account has changed. Kindly remit this month's invoice to IBAN GB29 NWBK 60161331926819. It's urgent - send today before 5pm. Keep this confidential between us."}
+{"id": "m02", "label": "malicious", "user": "U_RAVI", "text": "Our finance team has updated our banking details. Please wire the outstanding balance to IBAN FR7630006000011234567890189 immediately."}
+{"id": "m03", "label": "malicious", "user": "U_NEW", "text": "I'm covering for Ravi while he's on leave. Our bank account number has changed, remit invoice 2211 to the new account urgently. Please keep this between us for now."}
+{"id": "m04", "label": "malicious", "user": "U_RAVI", "text": "Urgent: due to an audit our old account is frozen. Payment details are now IBAN NL91ABNA0417164300 - please process today, discreet handling appreciated."}
+{"id": "m05", "label": "malicious", "user": "U_RAVI", "text": "Can you share your login credentials for the supplier portal? We need to update the payment details on your behalf before end of day."}
+{"id": "m06", "label": "malicious", "user": "U_NEW", "text": "Please note the beneficiary on our account has changed to Acme Supplies Holdings. New IBAN DE02120300000000202051, remit immediately."}
+{"id": "m07", "label": "malicious", "user": "U_RAVI", "text": "Our sort code and account number are different from this month. Please update your records and wire the balance right now, don't tell the wider team yet."}
+{"id": "m08", "label": "malicious", "user": "U_RAVI", "text": "Quick favour - can you send me the one-time passcode that just came through? Time-sensitive."}
+{"id": "m09", "label": "malicious", "user": "U_NEW", "text": "Following our switch of banking partner, all remittances should now go to IBAN ES9121000418450200051332. This cannot wait, invoices are overdue."}
+{"id": "m10", "label": "malicious", "user": "U_RAVI", "text": "Please send the remittance to our updated account going forward. Details to follow separately - keep this quiet until the announcement."}
+{"id": "m11", "label": "malicious", "user": "U_NEW", "text": "Kindly note we have moved our payment details. Email me directly rather than the channel and I'll share the new beneficiary account."}
+{"id": "m12", "label": "malicious", "user": "U_RAVI", "text": "Our ACH details have been switched, route the payment to routing 021000021 account 9876543210. Needs to go out today, confidential please."}
+{"id": "b23", "label": "benign", "user": "U_RAVI", "text": "The wireless units ship today, tracking to follow this afternoon."}
+{"id": "b24", "label": "benign", "user": "U_PRIYA", "text": "Invoice 2214 attached, revised copy is now in the shared drive."}
+{"id": "b25", "label": "benign", "user": "U_RAVI", "text": "Our approach has changed slightly on the packaging, nothing that affects price."}
+{"id": "b26", "label": "benign", "user": "U_PRIYA", "text": "Please remit invoice 2211 by Friday if you can, no rush beyond that."}
+{"id": "b27", "label": "benign", "user": "U_RAVI", "text": "We reached agreement on the machinery order, paperwork follows."}
+{"id": "b28", "label": "benign", "user": "U_PRIYA", "text": "Payment for invoice 2198 went out to DE89370400440532013000 this morning, thanks."}
+{"id": "b29", "label": "benign", "user": "U_RAVI", "text": "Confirming our account details are unchanged: DE89 3704 0044 0532 0130 00."}
+{"id": "b30", "label": "benign", "user": "U_PRIYA", "text": "The switch to the new courier is done, delivery windows are unchanged."}
+{"id": "m13", "label": "malicious", "user": "U_NEW", "text": "Hi - I handle receivables now. Do not use DE89370400440532013000 any longer; remit invoice 2211 to GB29 NWBK 60161331926819 instead. Urgent, and please keep it between us."}
+{"id": "m14", "label": "malicious", "user": "U_RAVI", "text": "our banking details have moved, please wire the balance to gb29 nwbk 60161331926819 before end of day. discreet handling appreciated."}

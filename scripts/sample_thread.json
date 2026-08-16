@@ -1,0 +1,12 @@
+{
+  "channel": "C_CONNECT_ACME_SUP",
+  "our_team": "T_BUYER",
+  "members": {"T_BUYER": "buyer (us)", "T_SUP": "supplier (Acme Supplies)"},
+  "vendor_key": "acme_supplies",
+  "messages": [
+    {"team": "T_SUP",   "ts": "2026-05-30T10:00:00Z", "user": "Ravi (Acme Supplies)",    "text": "Morning! Your order #5512 ships Friday, tracking to follow."},
+    {"team": "T_BUYER", "ts": "2026-05-30T10:12:00Z", "user": "Sam (us)",                "text": "Great, thanks Ravi."},
+    {"team": "T_SUP",   "ts": "2026-06-02T09:30:00Z", "user": "Ravi (Acme Supplies)",    "text": "Can you confirm the delivery dock for Friday?"},
+    {"team": "T_SUP",   "ts": "2026-06-08T08:45:00Z", "user": "Ravi K. (Acme Supplies)", "text": "Hi, please note our bank account has changed. Kindly remit this month's invoice to IBAN GB29 NWBK 60161331926819. It's urgent - send today before 5pm. Keep this confidential between us."}
+  ]
+}

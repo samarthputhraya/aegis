@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1040" height="600" fill="#ffffff"/>
+  <text x="520" y="36" text-anchor="middle" font-size="23" font-weight="700" fill="#1d1c1d">Aegis — fraud tripwire for Slack Connect</text>
+  <text x="520" y="60" text-anchor="middle" font-size="13.5" fill="#616061">Relationship baseline (RTS) · signal classification (Slack AI) · on-file bank check (MCP) · real-time warning</text>
+
+  <rect x="40" y="100" width="250" height="150" rx="12" fill="#fbeceb" stroke="#e0a39e"/>
+  <text x="165" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#a3261d">Slack Connect channel</text>
+  <rect x="62" y="142" width="206" height="40" rx="8" fill="#ffffff" stroke="#eccac6"/>
+  <text x="165" y="167" text-anchor="middle" font-size="12.5" fill="#1d1c1d">Us (buyer)</text>
+  <rect x="62" y="190" width="206" height="50" rx="8" fill="#ffffff" stroke="#eccac6"/>
+  <text x="165" y="210" text-anchor="middle" font-size="12.5" fill="#1d1c1d">Supplier (external)</text>
+  <text x="165" y="228" text-anchor="middle" font-size="11" fill="#a3261d">⚠ "change our bank account, urgent"</text>
+
+  <rect x="395" y="92" width="250" height="180" rx="12" fill="#1d1c1d"/>
+  <text x="520" y="120" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Aegis (Bolt)</text>
+  <rect x="415" y="132" width="210" height="30" rx="7" fill="#ffffff"/>
+  <text x="520" y="152" text-anchor="middle" font-size="12" fill="#1d1c1d">RTS — relationship baseline</text>
+  <rect x="415" y="168" width="210" height="30" rx="7" fill="#ffffff"/>
+  <text x="520" y="188" text-anchor="middle" font-size="12" fill="#1d1c1d">Slack AI — signal classify</text>
+  <rect x="415" y="204" width="210" height="30" rx="7" fill="#ffffff"/>
+  <text x="520" y="224" text-anchor="middle" font-size="12" fill="#1d1c1d">Risk score + reasons</text>
+  <rect x="415" y="240" width="210" height="24" rx="6" fill="#3aa657"/>
+  <text x="520" y="257" text-anchor="middle" font-size="11.5" fill="#ffffff">MCP: verify IBAN vs on-file</text>
+
+  <rect x="760" y="100" width="240" height="150" rx="12" fill="#eef6ec" stroke="#9fc89a"/>
+  <text x="880" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#2b6a2f">MCP verify tools</text>
+  <rect x="780" y="140" width="200" height="28" rx="6" fill="#ffffff" stroke="#cfe6cb"/>
+  <text x="880" y="159" text-anchor="middle" font-size="12" fill="#1d1c1d">get_vendor (bank on file)</text>
+  <rect x="780" y="172" width="200" height="28" rx="6" fill="#ffffff" stroke="#cfe6cb"/>
+  <text x="880" y="191" text-anchor="middle" font-size="12" fill="#1d1c1d">verify_vendor_bank</text>
+  <rect x="780" y="204" width="200" height="28" rx="6" fill="#ffffff" stroke="#cfe6cb"/>
+  <text x="880" y="223" text-anchor="middle" font-size="12" fill="#1d1c1d">open_verification_task</text>
+
+  <rect x="300" y="360" width="440" height="170" rx="12" fill="#f8f8f8" stroke="#dddddd"/>
+  <text x="520" y="386" text-anchor="middle" font-size="15" font-weight="700" fill="#1d1c1d">Output in Slack</text>
+  <rect x="320" y="402" width="195" height="112" rx="8" fill="#fff5f5" stroke="#f0c9c6"/>
+  <text x="417" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="#a3261d">🔴 Warning card</text>
+  <text x="417" y="446" text-anchor="middle" font-size="11" fill="#1d1c1d">reasons (IBAN ≠ on file,</text>
+  <text x="417" y="462" text-anchor="middle" font-size="11" fill="#1d1c1d">urgency, new sender)</text>
+  <text x="417" y="484" text-anchor="middle" font-size="11" fill="#1d1c1d">[ Verify out-of-band ]</text>
+  <rect x="525" y="402" width="195" height="112" rx="8" fill="#ffffff" stroke="#e3e3e3"/>
+  <text x="622" y="424" text-anchor="middle" font-size="13" font-weight="700" fill="#611f69">Canvas trust log</text>
+  <text x="622" y="446" text-anchor="middle" font-size="11" fill="#1d1c1d">audit trail of flags</text>
+  <text x="622" y="462" text-anchor="middle" font-size="11" fill="#1d1c1d">visible to both orgs</text>
+
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#616061"/></marker></defs>
+  <line x1="290" y1="175" x2="392" y2="175" stroke="#616061" stroke-width="2" marker-end="url(#a)"/>
+  <text x="341" y="166" text-anchor="middle" font-size="10.5" fill="#616061">message + RTS</text>
+  <line x1="645" y1="180" x2="757" y2="180" stroke="#616061" stroke-width="2" marker-end="url(#a)"/>
+  <text x="701" y="171" text-anchor="middle" font-size="10.5" fill="#616061">bank check</text>
+  <line x1="520" y1="272" x2="520" y2="357" stroke="#616061" stroke-width="2" marker-end="url(#a)"/>
+  <text x="566" y="318" text-anchor="middle" font-size="10.5" fill="#616061">flag + log</text>
+  <text x="520" y="565" text-anchor="middle" font-size="12" fill="#616061">RTS scoped to the Connect channel → baseline without reading either org's internal Slack</text>
+</svg>

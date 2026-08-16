@@ -1,0 +1,8 @@
+{
+  "acme_supplies": {
+    "vendor": "Acme Supplies",
+    "csm": "Sam",
+    "known_contacts": ["Ravi (Acme Supplies)"],
+    "bank_on_file": {"iban": "DE89370400440532013000", "updated": "2025-09-01"}
+  }
+}
